@@ -19,6 +19,7 @@ class ContactController extends AbstractController
      */
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         $contacts = $this->getDoctrine()
             ->getRepository(Contact::class)
             ->findAll();
@@ -61,6 +62,7 @@ class ContactController extends AbstractController
      */
     public function show(Contact $contact): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         return $this->render('contact/show.html.twig', [
             'contact' => $contact,
         ]);
@@ -71,6 +73,7 @@ class ContactController extends AbstractController
      */
     public function edit(Request $request, Contact $contact): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
@@ -91,6 +94,7 @@ class ContactController extends AbstractController
      */
     public function delete(Request $request, Contact $contact): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($contact);

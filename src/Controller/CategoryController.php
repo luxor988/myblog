@@ -19,6 +19,7 @@ class CategoryController extends AbstractController
      */
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         $categories = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findAll();
@@ -33,6 +34,7 @@ class CategoryController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -56,6 +58,7 @@ class CategoryController extends AbstractController
      */
     public function show(Category $category): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         return $this->render('category/show.html.twig', [
             'category' => $category,
         ]);
@@ -66,6 +69,7 @@ class CategoryController extends AbstractController
      */
     public function edit(Request $request, Category $category): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
@@ -86,6 +90,7 @@ class CategoryController extends AbstractController
      */
     public function delete(Request $request, Category $category): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($category);

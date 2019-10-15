@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\Comment;
+use App\Entity\Status;
 use App\Form\PostType;
+use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +35,7 @@ class PostController extends AbstractController
      */
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         $user = $this->getUser();
         //dump($user);die;
 
@@ -56,6 +60,7 @@ class PostController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -102,8 +107,51 @@ class PostController extends AbstractController
      */
     public function show(Post $post): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         return $this->render('post/show.html.twig', [
             'post' => $post,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="post_view", methods={"GET"})
+     */
+    public function view(Request $request, Post $post): Response
+    {
+        $posts = $this->getDoctrine()
+            ->getRepository(Post::class)
+            ->findAll();
+
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted()){
+
+            $status = $this->getDoctrine()->getRepository(Status::class)->find(1);
+            $comment->setStatus($status);
+            $comment->setPost($post);
+
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($comment);
+                $entityManager->flush();
+
+                $this->addFlash(
+                    'notice',
+                    'Gracias!'
+                );
+                return $this->redirectToRoute('post_view');
+
+            }
+        }
+
+        return $this->render('post/view.html.twig', [
+            'posts' => $posts,
+            'post' => $post,
+            'comment' => $comment,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -112,6 +160,7 @@ class PostController extends AbstractController
      */
     public function edit(Request $request, Post $post): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
@@ -132,6 +181,7 @@ class PostController extends AbstractController
      */
     public function delete(Request $request, Post $post): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, 'Unable to access this page!');
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($post);

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.tittle }}{% endblock %}
+
+{% block body %}
+    <div class="col-lg-4">
+
+
+        <!-- Author -->
+        <p class="lead">
+            Entradas
+        </p>
+
+        <hr>
+
+        {% for post in posts %}
+            <a href="{{ path('post_view', {'id': post.id}) }}">{{ post.tittle }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="col-lg-8">
+        <h1>{{ post.tittle }}</h1>
+
+        <img src="{{asset('uploads/images')}}/{{ post.image }}" style="max-width: 500px;height: auto;max-height: 400px;text-align: center">
+
+
+        <p>Por: {{ post.user.name }} {{ post.user.lastname }}/{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+
+        <p>{{ post.brief }}</p>
+        <p>{{ post.content }}</p>
+
+        <div class="col-lg-12 div-comment">
+            <h5>Comentarios</h5>
+            {{ include('comment/_form.html.twig', {'button_label': 'Enviar'}) }}
+        </div>
+
+
+    </div>
+
+{% endblock %}

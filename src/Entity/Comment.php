@@ -26,7 +26,7 @@ class Comment
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=200, nullable=true)
+     * @ORM\Column(name="name", type="string", length=200, nullable=false)
      */
     private $name;
 
@@ -36,14 +36,14 @@ class Comment
      *     message = "The email '{{ value }}' is not a valid email.",
      *     checkMX = true
      * )
-     * @ORM\Column(name="email", type="string", length=200, nullable=true)
+     * @ORM\Column(name="email", type="string", length=200, nullable=false)
      */
     private $email;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="comment", type="string", length=255, nullable=true)
+     * @ORM\Column(name="comment", type="string", length=255, nullable=false)
      */
     private $comment;
 
@@ -155,7 +155,7 @@ class Comment
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function updatedTimestamps(): void
+    public function defaults(): void
     {
         $dateTimeNow = new \DateTime('now');
         if ($this->getCreatedAt() === null) {

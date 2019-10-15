@@ -27,3 +27,10 @@ contacto_new:
   controller: App\Controller\ContactController::new
   methods: [GET,POST]
 
+post_view:
+  path:       /post_view/{id}
+  controller: App\Controller\PostController::view
+
+entradas:
+  path:       /entradas
+  controller: App\Controller\PostController::index

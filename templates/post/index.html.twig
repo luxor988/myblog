@@ -8,11 +8,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Tittle</th>
                 <th>Brief</th>
-                <th>Content</th>
-                <th>Image</th>
                 <th>CreatedAt</th>
                 <th>actions</th>
             </tr>
@@ -20,11 +17,8 @@
         <tbody>
         {% for post in posts %}
             <tr>
-                <td>{{ post.id }}</td>
                 <td>{{ post.tittle }}</td>
                 <td>{{ post.brief }}</td>
-                <td>{{ post.content }}</td>
-                <td>{{ post.image }}</td>
                 <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('post_show', {'id': post.id}) }}">show</a>
