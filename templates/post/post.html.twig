@@ -17,9 +17,11 @@
             {% for post in posts %}
 
                 <div class="col-lg-3" style="text-align: center">
-                    <img src="{{asset('uploads/images')}}/{{ post.image }}" class="img-fluid" style="width: auto;max-height: 300px;text-align: center">
+                    <div class="img-post" style="min-height: 200px">
+                        <img src="{{asset('uploads/images')}}/{{ post.image }}" class="img-fluid" style="width: auto;max-height: 200px;text-align: center">
+                    </div>
                     <p style="text-align: center;font-weight: bold">{{ post.tittle }}</p>
-                    <p style="text-align: justify;font-size: 12px;">{{ post.brief }}</p>
+                    <p style="text-align: justify;font-size: 12px;min-height: 40px">{{ post.brief }}</p>
                     <a class="btn btn-secondary" href="{{ path('post_view', {'id': post.id}) }}" style="">Ver m&aacute;s</a>
 
                 </div>
