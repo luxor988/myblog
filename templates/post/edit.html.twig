@@ -3,11 +3,13 @@
 {% block title %}Edit Post{% endblock %}
 
 {% block body %}
-    <h1>Edit Post</h1>
 
-    {{ include('post/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="col-lg-12 div-comment">
+        <h1>Edit Post</h1>
 
-    <a href="{{ path('post_index') }}">back to list</a>
+        {{ include('post/_form.html.twig', {'button_label': 'Update'}) }}
 
-    {{ include('post/_delete_form.html.twig') }}
+        <a class="btn btn-primary" style="float: right;" href="{{ path('post_index') }}">back to list</a>
+
+    </div>
 {% endblock %}
