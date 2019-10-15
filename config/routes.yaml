@@ -1,3 +1,29 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+home:
+  path:     /
+  controller: App\Controller\BlogController::index
+  methods: GET
+
+login:
+  path:     /login
+  controller: App\Controller\SecurityController::login
+  methods: [GET,POST]
+
+blog:
+  path:       /blog
+  controller: App\Controller\PostController::post
+  methods: GET
+
+contacto:
+  path:       /contacto
+  controller: App\Controller\ContactController::new
+  methods: GET
+
+contacto_new:
+  path:       /contacto
+  controller: App\Controller\ContactController::new
+  methods: [GET,POST]
+
