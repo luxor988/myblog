@@ -3,6 +3,7 @@
 {% block title %}Post{% endblock %}
 
 {% block body %}
+<div class="col-lg-12 div-comment">
     <h1>Post</h1>
 
     <table class="table">
@@ -34,9 +35,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('post_index') }}">back to list</a>
+    <a class="btn btn-primary" style="float: left;" href="{{ path('post_index') }}">back to list</a>
 
-    <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
-
-    {{ include('post/_delete_form.html.twig') }}
+    <a class="btn btn-primary" style="float: right;" href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
+</div>
 {% endblock %}
