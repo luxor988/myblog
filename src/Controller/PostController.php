@@ -39,7 +39,7 @@ class PostController extends AbstractController
         $user = $this->getUser();
         //dump($user);die;
 
-        if($user->getRol()->getId() == 2 ){
+        if($user->getRol()->getId() == 1 ){
             $posts = $this->getDoctrine()
                 ->getRepository(Post::class)
                 ->findAll();
