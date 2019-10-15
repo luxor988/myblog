@@ -164,6 +164,14 @@ class PostController extends AbstractController
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
+        $user = $this->getUser();
+
+        if($post->getUser()->getId() != $user->getId()){
+            if($user->getRol()->getId() != 1) {
+                return $this->redirectToRoute('home');
+            }
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form['image']->getData();
 
